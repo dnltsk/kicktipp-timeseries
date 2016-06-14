@@ -1,3 +1,6 @@
+[![Build Status](https://circleci.com/gh/teeschke/kicktipp-timeseries.svg?style=shield&circle-token=d396db2639eb5dae9ecdfdef8f0c3ef0c46f3d64)](https://circleci.com/gh/teeschke/kicktipp-timeseries/) [![Heroku](https://heroku-badge.herokuapp.com/?app=kicktipp-timeseries&root=index.html&style=flat)](https://soccer-cs-prediction-webapp.herokuapp.com/)
+
+
 # Kicktipp Timeseries
 
 Timeseries visualization of Kicktipp prediction group members
