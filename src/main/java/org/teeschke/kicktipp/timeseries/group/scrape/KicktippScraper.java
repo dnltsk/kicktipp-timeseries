@@ -1,9 +1,9 @@
-package org.teeschke.group.scrape;
+package org.teeschke.kicktipp.timeseries.group.scrape;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.teeschke.group.Group;
-import org.teeschke.group.Match;
+import org.teeschke.kicktipp.timeseries.group.Group;
+import org.teeschke.kicktipp.timeseries.group.Match;
 
 import java.util.Arrays;
 

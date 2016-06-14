@@ -1,4 +1,4 @@
-package org.teeschke.group;
+package org.teeschke.kicktipp.timeseries.group;
 
 import java.util.List;
 

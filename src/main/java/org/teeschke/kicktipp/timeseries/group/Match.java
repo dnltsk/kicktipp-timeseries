@@ -1,4 +1,4 @@
-package org.teeschke.group;
+package org.teeschke.kicktipp.timeseries.group;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
