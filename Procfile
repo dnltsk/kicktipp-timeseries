@@ -1,1 +1,1 @@
-web: java -jar -Dserver.port=$PORT target/kicktipp-timeseries*.jar
+web: java -jar -Dserver.port=$PORT target/kicktipp.timeseries*.jar
