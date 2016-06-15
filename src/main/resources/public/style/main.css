@@ -1,9 +1,23 @@
-body{
-  background-color: #aaa;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  #color: #999;
+  font-family: “Century Gothic”, CenturyGothic, AppleGothic, sans-serif;
 }
-.contentWrapper {
-  width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #ccc;
+.desc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin:5px;
+  padding:10px;
+  #background-color: #111 ;
+}
+
+svg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  #background-color: #222 ;
 }
