@@ -7,9 +7,18 @@ function init(){
   svg = d3.select("svg");
 
   //var groupName = d3.select("input").node().value;
-  var groupName = "dummy"
+  var groupName = "familien-kicker"
   d3.json("/group?groupName="+groupName, function(group){
     updateWindow();
+
+    group.orderedScores.forEach(function(userScores){
+      userScores.unshift(0);
+    });
+    group.orderedMatches.unshift({
+      "title":"start",
+      "kickoffTime":"-"
+    });
+
     GROUP = group;
     resetChart();
   });
@@ -23,30 +32,26 @@ function resetChart(){
 
   svg.selectAll("*").remove();
 
-  var usernames = GROUP.orderedUsernames;
-  var matches = GROUP.orderedMatches;
-
-  var table = [];
-  usernames.forEach(function (username, i) {
-    var points = [];
-    matches.forEach(function(match, j){
-      points.push(match.orderedPlayerPoints[i]);
-    });
-    table.push(points);
-  });
-
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+  var margin = {top: 20, right: 150, bottom: 150, left: 50},
       width = WIDTH - margin.left - margin.right,
       height = HEIGHT - margin.top - margin.bottom;
 
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
 
-  var xAxis = d3.svg.axis().scale(x).orient("bottom");
+  x.domain([0, GROUP.orderedMatches.length-1]);
+  //x.domain(GROUP.orderedMatches.map(function(match){return match.title;}));
+  y.domain([0, d3.max(GROUP.orderedScores, function(scores) { return d3.max(scores, function(point){ return point}); })]);
+
+  var xAxis = d3.svg.axis().scale(x)
+      .tickFormat(function(d){
+        return GROUP.orderedMatches[d].title;
+      })
+      .orient("bottom")
+      .ticks(GROUP.orderedMatches.length);
+
   var yAxis = d3.svg.axis().scale(y).orient("left");
 
-  x.domain([0, matches.length-1]);
-  y.domain([0, d3.max(matches, function(match) { return d3.max(match.orderedPlayerPoints, function(point){ return point}); })]);
 
   var g = svg
       .attr("width", width + margin.left + margin.right)
@@ -57,7 +62,13 @@ function resetChart(){
   g.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")
+      .attr("y", 0)
+      .attr("x", -9)
+      .attr("dy", ".35em")
+      .attr("transform", "rotate(270)")
+      .style("text-anchor", "end");
 
   g.append("g")
       .attr("class", "y axis")
@@ -73,7 +84,7 @@ function resetChart(){
       .x(function(points, i) { return x(i); })
       .y(function(points) { return y(points); });
 
-  table.forEach(function (playerTimeseries, i) {
+  GROUP.orderedScores.forEach(function (playerTimeseries, i) {
     g.append("path")
         .datum(playerTimeseries)
         .attr("class", "line")
@@ -82,6 +93,15 @@ function resetChart(){
           "stroke": randomColor,
           "stroke-width": 2
         });
+  });
+
+  var numberOfMatches = GROUP.orderedMatches.length;
+  GROUP.orderedUsernames.forEach(function (username, i){
+    g.append("text")
+        .attr("x", x(numberOfMatches-1))
+        .attr("y", y(GROUP.orderedScores[i][numberOfMatches-1]))
+        .attr("dy", ".35em")
+        .text(username);
   });
 }
 

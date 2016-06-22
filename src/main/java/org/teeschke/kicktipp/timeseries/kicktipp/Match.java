@@ -1,15 +1,11 @@
-package org.teeschke.kicktipp.timeseries.group;
+package org.teeschke.kicktipp.timeseries.kicktipp;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 
-import java.util.List;
-
 public class Match {
 
-  public String teamA;
-  public String teamB;
-  public List<Integer> orderedPlayerPoints;
+  public String title;
 
   @JsonSerialize(using = CustomDateSerializer.class)
   public DateTime kickoffTime;

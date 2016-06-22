@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries.group;
+package org.teeschke.kicktipp.timeseries.kicktipp;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
