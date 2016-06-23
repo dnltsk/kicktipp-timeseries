@@ -11,6 +11,7 @@ import org.teeschke.kicktipp.timeseries.kicktipp.Group;
 import org.teeschke.kicktipp.timeseries.kicktipp.Match;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Service
 public class KicktippGroupScraper {
@@ -24,6 +25,20 @@ public class KicktippGroupScraper {
     group.orderedUsernames = scrapeOrderedUsernames(doc);
     group.orderedMatches = scrapeOrderedMatches(doc);
     group.orderedScores = scrapeOrderedScores(doc, group.orderedMatches.size());
+    return orderGroupByUsername(group);
+  }
+
+  private Group orderGroupByUsername(Group group) {
+    ArrayList<String> newOrderedUsernames = new ArrayList<> (group.orderedUsernames);
+    Collections.sort(newOrderedUsernames);
+
+    ArrayList<ArrayList<Double>> newOrderedScores = new ArrayList<> ();
+    for(String alphabeticalOrderedUsername : newOrderedUsernames){
+      int index = group.orderedUsernames.indexOf(alphabeticalOrderedUsername);
+      newOrderedScores.add(group.orderedScores.get(index));
+    }
+    group.orderedUsernames = newOrderedUsernames;
+    group.orderedScores = newOrderedScores;
     return group;
   }
 
@@ -88,7 +103,7 @@ public class KicktippGroupScraper {
 
   private Match createEmptyBonusMatch() {
     Match emptyBonusMatch = new Match();
-    emptyBonusMatch.title = "Bonus";
+    emptyBonusMatch.title = "Winner-Of-The-Day Bonus";
     return emptyBonusMatch;
   }
 
