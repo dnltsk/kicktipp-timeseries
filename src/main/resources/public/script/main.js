@@ -2,12 +2,16 @@ var svg;
 var WIDTH;
 var HEIGHT;
 var GROUP;
+var DEFAULT_GROUP_NAME = "familien-kicker";
 
 function init(){
   svg = d3.select("svg");
 
   //var groupName = d3.select("input").node().value;
-  var groupName = "familien-kicker"
+  var groupName = getUrlParameterByName('groupName');
+  if(groupName == null || typeof groupName == "undefined"){
+    groupName = DEFAULT_GROUP_NAME;
+  }
   d3.json("/group?groupName="+groupName, function(group){
     updateWindow();
 
@@ -112,3 +116,19 @@ function updateWindow(){
   resetChart();
 }
 window.onresize = updateWindow;
+
+
+function getUrlParameterByName(name, url) {
+  try {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }catch(e){
+    console.log("error in getUrlParameterByName()", e);
+    return null;
+  }
+}

@@ -24,6 +24,7 @@ public class GroupHttpController {
   public ResponseEntity<String> group(
       @RequestParam(value = "groupName", required = true) String groupName
   ) throws IOException {
+    groupName = groupName.toLowerCase();
     Group group = scraper.scrapeWholeGroupTimeseries(groupName);
     return new ResponseEntity<>(new ObjectMapper().writeValueAsString(group), createResponseHeaders(), OK);
   }
