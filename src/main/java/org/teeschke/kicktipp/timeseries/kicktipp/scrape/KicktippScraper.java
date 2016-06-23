@@ -43,10 +43,10 @@ public class KicktippScraper {
     }
 
     /* BONUS */
-    //String linkToBonusPage = "https://www.kicktipp.com/" + groupName + "/tippuebersicht?sortBy=GESAMTPUNKTE&wertung=einzelwertung&teilnehmerSucheName=&rankingGruppeId=0&tippspieltagIndex=0&tippspieltagIndexTippspieltageTab=5&language=en_GB";
-    //Document doc = Jsoup.connect(linkToBonusPage.toString()).get();
-    //Group orderedGroupBonus = bonusScraper.scrapeGroupBonus(doc);
-
+    String linkToBonusPage = "https://www.kicktipp.com/" + groupName + "/tippuebersicht?sortBy=GESAMTPUNKTE&wertung=einzelwertung&teilnehmerSucheName=&rankingGruppeId=0&tippspieltagIndex=0&tippspieltagIndexTippspieltageTab=5&language=en_GB";
+    Document doc = Jsoup.connect(linkToBonusPage.toString()).get();
+    Group orderedGroupBonus = bonusScraper.scrapeGroupBonus(doc);
+    groups.add(orderedGroupBonus);
 
     /* MERGE */
     Group mergedGroup = mergeGroups(groups);
