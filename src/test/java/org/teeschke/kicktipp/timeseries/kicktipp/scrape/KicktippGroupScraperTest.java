@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +32,7 @@ public class KicktippGroupScraperTest {//extends ApplicationTests {
   }
 
   @Test
-  public void complete_group_can_be_scriped() throws Exception {
+  public void complete_group_can_be_scraped() throws Exception {
     Group group = groupScraper.scrapeGroup(METEOGOAL_FIRST_PAGE);
     assertThat(group).isNotNull();
     assertThat(group.orderedUsernames).isNotNull();
@@ -44,22 +41,12 @@ public class KicktippGroupScraperTest {//extends ApplicationTests {
   }
 
   @Test
-  public void complete_matches_can_be_scriped() throws Exception {
+  public void complete_matches_can_be_scraped() throws Exception {
     Group group = groupScraper.scrapeGroup(METEOGOAL_FIRST_PAGE);
     assertThat(group).isNotNull();
     assertThat(group.orderedMatches).isNotNull();
     assertThat(group.orderedMatches).isNotEmpty();
     assertThat(group.orderedMatches).hasSize(8);
-  }
-
-  @Test
-  public void partial_group_can_be_scripted() throws Exception {
-
-  }
-
-  static String readFile(Path path, Charset encoding) throws IOException {
-    byte[] encoded = Files.readAllBytes(path);
-    return new String(encoded, encoding);
   }
 
 }
