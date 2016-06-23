@@ -32,7 +32,7 @@ function resetChart(){
 
   svg.selectAll("*").remove();
 
-  var margin = {top: 20, right: 150, bottom: 150, left: 50},
+  var margin = {top: 20, right: 150, bottom: 220, left: 50},
       width = WIDTH - margin.left - margin.right,
       height = HEIGHT - margin.top - margin.bottom;
 
