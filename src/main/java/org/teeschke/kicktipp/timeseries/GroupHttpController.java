@@ -1,11 +1,12 @@
-package org.teeschke.kicktipp.timeseries.kicktipp;
+package org.teeschke.kicktipp.timeseries;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.teeschke.kicktipp.timeseries.kicktipp.scrape.KicktippScraper;
+import org.teeschke.kicktipp.timeseries.cache.GroupCacheManager;
+import org.teeschke.kicktipp.timeseries.scrape.KicktippScraper;
 
 import java.io.IOException;
 
@@ -17,6 +18,9 @@ public class GroupHttpController {
   private final String APPLICATION_JSON = "application/json";
 
   @Autowired
+  private GroupCacheManager cacher;
+
+  @Autowired
   private KicktippScraper scraper;
 
   @RequestMapping(value = "/group", method = RequestMethod.GET, produces=APPLICATION_JSON)
@@ -25,8 +29,13 @@ public class GroupHttpController {
       @RequestParam(value = "groupName", required = true) String groupName
   ) throws IOException {
     groupName = groupName.toLowerCase();
-    Group group = scraper.scrapeWholeGroupTimeseries(groupName);
-    return new ResponseEntity<>(new ObjectMapper().writeValueAsString(group), createResponseHeaders(), OK);
+    Group cachedGroup = cacher.getGroupFromCache(groupName);
+    if(cachedGroup != null){
+      return new ResponseEntity<>(new ObjectMapper().writeValueAsString(cachedGroup), createResponseHeaders(), OK);
+    }
+    Group loadedGroup = scraper.scrapeWholeGroupTimeseries(groupName);
+    cacher.addGroupInfoCache(groupName, loadedGroup);
+    return new ResponseEntity<>(new ObjectMapper().writeValueAsString(loadedGroup), createResponseHeaders(), OK);
   }
 
   protected HttpHeaders createResponseHeaders() {

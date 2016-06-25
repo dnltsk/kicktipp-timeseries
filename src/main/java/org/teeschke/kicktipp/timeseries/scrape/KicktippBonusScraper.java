@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries.kicktipp.scrape;
+package org.teeschke.kicktipp.timeseries.scrape;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -7,8 +7,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.teeschke.kicktipp.timeseries.kicktipp.Group;
-import org.teeschke.kicktipp.timeseries.kicktipp.Match;
+import org.teeschke.kicktipp.timeseries.Group;
+import org.teeschke.kicktipp.timeseries.Match;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

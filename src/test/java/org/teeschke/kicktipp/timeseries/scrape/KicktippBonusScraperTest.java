@@ -1,9 +1,9 @@
-package org.teeschke.kicktipp.timeseries.kicktipp.scrape;
+package org.teeschke.kicktipp.timeseries.scrape;
 
 import org.assertj.core.api.Assertions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.teeschke.kicktipp.timeseries.kicktipp.Group;
+import org.teeschke.kicktipp.timeseries.Group;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

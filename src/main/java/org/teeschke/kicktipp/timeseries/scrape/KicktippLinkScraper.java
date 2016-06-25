@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries.kicktipp.scrape;
+package org.teeschke.kicktipp.timeseries.scrape;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;

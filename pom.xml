@@ -66,6 +66,17 @@
 			<version>1.3.2.RELEASE</version>
 		</dependency>
 		<dependency>
+			<!-- not clear why it's needed -->
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>1.10.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<!-- unclear too-->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.10.19</version>
@@ -87,6 +98,11 @@
 			<artifactId>spring-test</artifactId>
 			<version>4.2.4.RELEASE</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901.jdbc4</version>
 		</dependency>
 	</dependencies>
 	

@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries.kicktipp;
+package org.teeschke.kicktipp.timeseries;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries.kicktipp.scrape;
+package org.teeschke.kicktipp.timeseries.scrape;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -6,7 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.teeschke.kicktipp.timeseries.kicktipp.Group;
+import org.teeschke.kicktipp.timeseries.Group;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

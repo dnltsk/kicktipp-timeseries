@@ -1,8 +1,8 @@
-package org.teeschke.kicktipp.timeseries.kicktipp.scrape;
+package org.teeschke.kicktipp.timeseries.scrape;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.teeschke.kicktipp.timeseries.kicktipp.Group;
+import org.teeschke.kicktipp.timeseries.Group;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ComponentScan("org.teeschke.kicktipp.timeseries")
-//@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes=ApplicationTests.class)
-public class KicktippGroupScraperTest {//extends ApplicationTests {
+//@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes=BaseWebTest.class)
+public class KicktippGroupScraperTest {//extends BaseWebTest {
 
   //@Autowired
   private KicktippGroupScraper groupScraper;

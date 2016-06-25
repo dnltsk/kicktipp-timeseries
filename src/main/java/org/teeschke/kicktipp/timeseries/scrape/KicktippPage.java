@@ -1,6 +1,6 @@
-package org.teeschke.kicktipp.timeseries.kicktipp.scrape;
+package org.teeschke.kicktipp.timeseries.scrape;
 
-import org.teeschke.kicktipp.timeseries.kicktipp.Group;
+import org.teeschke.kicktipp.timeseries.Group;
 
 import java.net.URL;
 
