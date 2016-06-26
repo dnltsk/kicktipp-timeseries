@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.stereotype.Service;
+import org.teeschke.kicktipp.timeseries.DbConfig;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 @Service
-public class GroupCacheDb extends CacheDbConfig {
+public class GroupCacheDb extends DbConfig {
 
   public CachedGroupData loadCachedGroup(String groupName){
     StringBuilder sql = new StringBuilder();
@@ -110,37 +111,6 @@ public class GroupCacheDb extends CacheDbConfig {
 
     Statement stmt = conn.createStatement();
     stmt.executeUpdate(sql.toString());
-  }
-
-  private static void closeStuff(Connection conn, Statement stmt, ResultSet rs) {
-    try {
-      if (rs != null && !rs.isClosed()) {
-        rs.close();
-      }
-      if (stmt != null && !stmt.isClosed()) {
-        stmt.close();
-      }
-      if (conn != null && !conn.isClosed()) {
-        conn.close();
-      }
-      while (isConnActive(conn)) {
-        try {
-          System.err.println("Conn not closed -> wait 1 sec");
-          Thread.sleep(1_000);
-          if (conn != null && !conn.isClosed()) {
-            conn.close();
-          }
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private static boolean isConnActive(Connection conn) throws SQLException {
-    return conn != null && !conn.isClosed();
   }
 
 }
