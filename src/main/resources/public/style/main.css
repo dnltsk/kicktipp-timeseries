@@ -9,10 +9,31 @@ html, body {
 .desc {
   position: absolute;
   top: 0;
-  left: 0;
-  margin:5px;
-  padding:10px;
-  #background-color: #111 ;
+  left: 100px;
+  margin: 0;
+  padding: 10px 10px 13px;
+  color: #fff;
+  background-color: #222;
+}
+.desc h1{
+  margin:0;
+}
+.desc p{
+  margin: 1px 0px 5px;
+}
+.desc a, .desc a:visited, .desc a:active{
+  color:#0ff;
+}
+.desc input{
+  border-color: rgb(204, 204, 204);
+  text-align: left;
+  border-width: 0px;
+  border-style: hidden;
+  box-shadow: 0px 0px 5px 0px rgba(42, 42, 42, 0.75);
+  font-size: 14px;
+  padding: 5px;
+  color: rgb(77, 77, 77);
+  font-weight: bold;
 }
 
 .network{
@@ -60,4 +81,43 @@ svg{
 .lines path.highlight {
   stroke: #ff0;
   stroke-width: 5px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 350px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }

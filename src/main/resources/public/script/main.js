@@ -5,14 +5,22 @@ var GROUP;
 var DEFAULT_GROUP_NAME = "familien-kicker";
 
 function init(){
+  initModal();
+  initTextFocus();
+
   svg = d3.select("svg");
 
-  //var groupName = d3.select("input").node().value;
   var groupName = getUrlParameterByName('groupName');
   if(groupName == null || typeof groupName == "undefined"){
     groupName = DEFAULT_GROUP_NAME;
   }
-  d3.json("/group?groupName="+groupName, function(group){
+  d3.json("/group?groupName="+groupName, function(error, group){
+
+    if(error){
+      d3.select("#myModal").style("display","block")
+      return;
+    }
+
     updateWindow();
 
     group.orderedScores.forEach(function(userScores){
@@ -200,4 +208,29 @@ function getUrlParameterByName(name, url) {
   }catch(e){
     return null;
   }
+}
+
+function initModal(){
+  var modal = document.getElementById('myModal');
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+}
+
+function initTextFocus() {
+  var defaultGrouName = "familien-kicker";
+  var inputNode = d3.select(".desc input").node();
+  var groupName = getUrlParameterByName("groupName");
+  if(groupName == null){
+    inputNode.value = defaultGrouName;
+  }else{
+    inputNode.value = groupName;
+  }
+  inputNode.focus();
 }
