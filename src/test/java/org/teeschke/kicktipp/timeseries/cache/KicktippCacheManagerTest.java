@@ -18,14 +18,14 @@ public class KicktippCacheManagerTest{
   @Autowired
   private GroupCacheManager cacheManager;
 
-  /* disabled because spring context not loadable (needed for autowireig ) */
+  /* disabled because spring context not loaded yet (needed for autowireig ) */
   @Ignore @Test
   public void cached_groupdata_can_be_loaded() throws Exception {
     Group groupFromCache = cacheManager.getGroupFromCache("meteogoal");
     assertThat(groupFromCache).isNotNull();
   }
 
-  /* disabled because spring context not loadable (needed for autowireig ) */
+  /* disabled because spring context not loaded yet (needed for autowireig ) */
   @Ignore @Test
   public void cached_groupdata_can_be_updated() throws Exception {
   }

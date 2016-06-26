@@ -103,7 +103,7 @@ public class KicktippGroupScraper {
 
   private Match createEmptyBonusMatch() {
     Match emptyBonusMatch = new Match();
-    emptyBonusMatch.title = "Winner-Of-The-Day Bonus";
+    emptyBonusMatch.title = "Matchday Bonus";
     return emptyBonusMatch;
   }
 
@@ -111,7 +111,13 @@ public class KicktippGroupScraper {
     String teamA = matchCols.get(1).text();
     String teamB = matchCols.get(2).text();
     String result = matchCols.get(4).text();
-    return teamA + "-" + teamB;
+    teamA = replaceUnknown(teamA);
+    teamB = replaceUnknown(teamB);
+    return teamA + " - " + teamB;
+  }
+
+  private String replaceUnknown(String teamB) {
+    return teamB.replaceAll("unknown", "/");
   }
 
   private ArrayList<String> scrapeOrderedUsernames(Document doc) {

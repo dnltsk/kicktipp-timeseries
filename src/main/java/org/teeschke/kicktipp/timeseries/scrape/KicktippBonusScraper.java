@@ -65,7 +65,7 @@ public class KicktippBonusScraper {
 
   private Match createEmptyBonusMatch() {
     Match emptyBonusMatch = new Match();
-    emptyBonusMatch.title = "Winner-Of-The-Bonus Bonus";
+    emptyBonusMatch.title = "Matchday Bonus";
     return emptyBonusMatch;
   }
 
