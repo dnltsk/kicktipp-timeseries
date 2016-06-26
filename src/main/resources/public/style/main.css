@@ -15,9 +15,49 @@ html, body {
   #background-color: #111 ;
 }
 
+.network{
+  position: fixed;
+  bottom: 5px;
+  right: 10px;
+}
+
+/* CHART */
 svg{
   position: absolute;
   top: 0;
   left: 0;
-  #background-color: #222 ;
+  background-color: #222 ;
+}
+
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 1.5px;
+}
+.axis text {
+  fill: #eee;
+}
+.axis text.bonus {
+  fill: #bbb;
+}
+
+
+.lines path {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.members text {
+  fill: #eee;
+  font-weight: normal;
+}
+
+.members text.highlight{
+  fill: #ff0;
+  font-weight: bold;
+}
+.lines path.highlight {
+  stroke: #ff0;
+  stroke-width: 5px;
 }

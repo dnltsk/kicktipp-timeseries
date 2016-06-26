@@ -23,6 +23,13 @@ function init(){
       "kickoffTime":"-"
     });
 
+    group.orderedUsernames.forEach(function (username, i) {
+      var classname = usernameToClassname(username);
+      var userColor = randomColor();
+      createClass("path." + classname, "stroke: "+userColor+";");
+      createClass("text." + classname, "fill: "+userColor+";");
+    });
+
     GROUP = group;
     resetChart();
   });
@@ -44,7 +51,6 @@ function resetChart(){
   var y = d3.scale.linear().range([height, 0]);
 
   x.domain([0, GROUP.orderedMatches.length-1]);
-  //x.domain(GROUP.orderedMatches.map(function(match){return match.title;}));
   y.domain([0, d3.max(GROUP.orderedScores, function(scores) { return d3.max(scores, function(point){ return point}); })]);
 
   var xAxis = d3.svg.axis().scale(x)
@@ -72,7 +78,10 @@ function resetChart(){
       .attr("x", -9)
       .attr("dy", ".35em")
       .attr("transform", "rotate(270)")
-      .style("text-anchor", "end");
+      .style("text-anchor", "end")
+      .classed("bonus", function(d, i){
+        return GROUP.orderedMatches[i].title.indexOf("Bonus") > -1;
+      });
 
   g.append("g")
       .attr("class", "y axis")
@@ -88,26 +97,87 @@ function resetChart(){
       .x(function(points, i) { return x(i); })
       .y(function(points) { return y(points); });
 
+
+  var linesGroup = g.append("g")
+                   .classed("lines", true);
+
   GROUP.orderedScores.forEach(function (playerTimeseries, i) {
-    g.append("path")
+    var classname = usernameToClassname(GROUP.orderedUsernames[i]);
+    linesGroup.append("path")
         .datum(playerTimeseries)
-        .attr("class", "line")
         .attr("d", line)
-        .style({
-          "stroke": randomColor,
-          "stroke-width": 2
-        });
+        .classed(classname, true)
+        .on("mouseover", function(d, j){
+          //unhighlight all
+          d3.select("g.members text.highlight").classed("highlight", false);
+          d3.select("g.lines path.highlight").classed("highlight", false);
+
+          //highlight user
+          var usernameToHighlightClassname = d3.select(this).attr("class");
+          d3.select("g.lines path."+usernameToHighlightClassname)
+              .classed("highlight", true)
+              .moveToBack();
+          d3.select("g.members text."+usernameToHighlightClassname)
+              .classed("highlight", true)
+              .moveToFront();
+        });;
   });
+
+  var membersGroup = g.append("g")
+      .classed("members", true);
 
   var numberOfMatches = GROUP.orderedMatches.length;
   GROUP.orderedUsernames.forEach(function (username, i){
-    g.append("text")
+    var classname = usernameToClassname(username);
+    membersGroup.append("text")
         .attr("x", x(numberOfMatches-1))
         .attr("y", y(GROUP.orderedScores[i][numberOfMatches-1]))
         .attr("dy", ".35em")
-        .text(username);
+        .classed(classname, true)
+        .text(username)
+        .on("mouseover", function(d, j){
+          //unhighlight all
+          d3.select("g.members text.highlight").classed("highlight", false);
+          d3.select("g.lines path.highlight").classed("highlight", false);
+
+          //highlight user
+          var usernameToHighlightClassname = d3.select(this).attr("class");
+          d3.select("g.lines path."+usernameToHighlightClassname)
+              .classed("highlight", true)
+              .moveToBack();
+          d3.select("g.members text."+usernameToHighlightClassname)
+              .classed("highlight", true)
+              .moveToFront();
+        });
   });
 }
+
+function usernameToClassname(username){
+  return username.replace(/\s/gi, "-");
+}
+
+function createClass(name,rules){
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  document.getElementsByTagName('head')[0].appendChild(style);
+  if(!(style.sheet||{}).insertRule)
+    (style.styleSheet || style.sheet).addRule(name, rules);
+  else
+    style.sheet.insertRule(name+"{"+rules+"}",0);
+}
+
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+
+d3.selection.prototype.moveToBack = function() {
+  return this.each(function(){
+    this.parentNode.insertBefore(this, this.parentNode.firstChild);
+    //this.parentNode.appendChild(this);
+  });
+};
 
 function updateWindow(){
   WIDTH = window.innerWidth
@@ -128,7 +198,6 @@ function getUrlParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   }catch(e){
-    console.log("error in getUrlParameterByName()", e);
     return null;
   }
 }
