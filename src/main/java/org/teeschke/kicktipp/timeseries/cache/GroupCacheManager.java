@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Minutes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,14 +27,8 @@ public class GroupCacheManager {
     }
     DateTime now = new DateTime(DateTimeZone.UTC);
     DateTime insertPlusAge = cachedGroupData.insertedAt.plusMinutes(maxAgeOfCacheInMinutes);
-    System.out.println("now "+now);
-    System.out.println("ins "+cachedGroupData.insertedAt);
-    System.out.println("dif "+Minutes.minutesBetween(now, cachedGroupData.insertedAt).getMinutes());
-    System.out.println("age "+insertPlusAge);
-    System.out.println("dif "+Minutes.minutesBetween(now, insertPlusAge).getMinutes());
 
     if(now.isAfter(insertPlusAge)){
-      //TODO: delete cached group data
       return null;
     }
     return new ObjectMapper().readValue(cachedGroupData.groupDataAsJson, Group.class);
