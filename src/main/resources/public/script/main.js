@@ -15,7 +15,7 @@ function init(){
     groupName = DEFAULT_GROUP_NAME;
   }
   d3.json("/group?groupName="+groupName, function(error, group){
-
+    hideWaiting();
     if(error){
       d3.select("#myModal").style("display","block")
       return;
@@ -233,4 +233,8 @@ function initTextFocus() {
     inputNode.value = groupName;
   }
   inputNode.focus();
+}
+
+function hideWaiting(){
+  d3.select("div#waiting").style("display", "none");
 }

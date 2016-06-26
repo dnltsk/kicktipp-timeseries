@@ -121,3 +121,12 @@ svg{
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Wait */
+div#waiting {
+  display: block;
+  position: relative;
+  top: 35%;
+  margin: auto;
+  width: 100px;
+}
