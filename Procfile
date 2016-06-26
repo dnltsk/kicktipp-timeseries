@@ -1,1 +1,1 @@
-web: java -jar -Dserver.port=$PORT target/kicktipp-timeseries*.jar
+web: java -jar -Dserver.port=$PORT -Dcache.host=$CACHE_HOST -Dcache.port=$CACHE_PORT -Dcache.dbname=$CACHE_DBNAME -Dcache.schema=$CACHE_SCHEMA -Dcache.user=$CACHE_USER -Dcache.pass=$CACHE_PASS target/kicktipp-timeseries*.jar
