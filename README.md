@@ -4,10 +4,14 @@ _work in progress..._
 
 # Kicktipp Timeseries
 
-Timeseries visualization of Kicktipp prediction group members
+Interactive time series visualization of [Kicktipp](http://kicktipp.com/) football prediction group members
+
+![Sample "familien-kicker"](src/main/resources/public/img/sample-familien-kicker.jpg "Sample familien-kicker")
+
+![Sample "meteogoal"](src/main/resources/public/img/sample-meteogoal.jpg "Sample meteogoal")
 
 ## build & start
 
-1. build: `mvn clean package`
+1. build: `mvn package`
 2. run: `java -jar target/kicktipp-timeseries*.jar`
 3. access: `http://localhost:8080`
