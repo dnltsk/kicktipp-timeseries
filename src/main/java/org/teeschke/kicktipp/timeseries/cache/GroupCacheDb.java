@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.stereotype.Service;
-import org.teeschke.kicktipp.timeseries.DbConfig;
+import org.teeschke.kicktipp.timeseries.config.DbConfig;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

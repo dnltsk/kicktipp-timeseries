@@ -2,11 +2,13 @@ package org.teeschke.kicktipp.timeseries.scrape;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teeschke.kicktipp.timeseries.Group;
+import org.teeschke.kicktipp.timeseries.utils.GroupNotFoundException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -30,7 +32,7 @@ public class KicktippScraper {
   @Autowired
   private KicktippLinkScraper linkScraper;
 
-  public Group scrapeWholeGroupTimeseries(String groupName) throws IOException {
+  public Group scrapeWholeGroupTimeseries(String groupName) throws IOException, GroupNotFoundException {
 
     /* GENERAL */
     URL linkToNextPage = getLinkFirstPageUrl(groupName);
@@ -54,9 +56,13 @@ public class KicktippScraper {
     return mergedGroup;
   }
 
-  private KicktippPage scrapeGroupTimeseries(URL linkToFirstPage, String groupName) throws IOException {
-    Document doc = Jsoup.connect(linkToFirstPage.toString()).get();
-    //Document doc = Jsoup.parse(Paths.get("src", "test", "resources", "METEOGOAL_FIRST_PAGE.html").toFile(), "UTF-8");
+  private KicktippPage scrapeGroupTimeseries(URL linkToFirstPage, String groupName) throws IOException, GroupNotFoundException {
+    Document doc;
+    try {
+      doc = Jsoup.connect(linkToFirstPage.toString()).get();
+    }catch(HttpStatusException e){
+      throw new GroupNotFoundException(groupName);
+    }
     KicktippPage page = new KicktippPage();
     page.group = groupScraper.scrapeGroup(doc);
     page.linkToNextPage = linkScraper.scrapeLinkToNextPage(doc, groupName);

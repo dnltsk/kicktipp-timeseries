@@ -6,13 +6,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.teeschke.kicktipp.timeseries.ApplicationConfiguration;
 import org.teeschke.kicktipp.timeseries.Group;
+import org.teeschke.kicktipp.timeseries.config.ApplicationConfig;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationConfiguration.class, KicktippCacheManagerTest.class})
+@ContextConfiguration(classes = {ApplicationConfig.class, KicktippCacheManagerTest.class})
 public class KicktippCacheManagerTest{
 
   @Autowired

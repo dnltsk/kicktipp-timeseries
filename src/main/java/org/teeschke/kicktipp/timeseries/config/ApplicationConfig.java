@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries;
+package org.teeschke.kicktipp.timeseries.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @ComponentScan(basePackages = "org.teeschke.kicktipp.timeseries")
-public class ApplicationConfiguration {
+public class ApplicationConfig {
 
   @Bean
   public WebMvcConfigurerAdapter forwardToIndex() {

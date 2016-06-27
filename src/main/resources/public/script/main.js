@@ -17,7 +17,19 @@ function init(){
   d3.json("/group?groupName="+groupName, function(error, group){
     hideWaiting();
     if(error){
-      d3.select("#myModal").style("display","block")
+      console.log("error! ", error);
+      var errorGroupName = JSON.parse(error.response).groupName;
+      if(error.status == 404){
+        d3.select("#errorTitle").text("Oups - unable to find your prediction group.");
+        d3.select("#errorMessage").html("Please check<br>"+
+                                        "<a href='http://www.kicktipp.com/"+errorGroupName +"/' target='_blank'>http://www.kicktipp.com/"+errorGroupName +"/</a>");
+      }else{
+        d3.select("#errorTitle").text("Oups - something went wrong.");
+        d3.select("#errorMessage").html("Please check<br>"+
+                                        "<a href='http://www.kicktipp.com/"+errorGroupName +"/'>http://www.kicktipp.com/"+errorGroupName +"/</a><br>"+
+                                        "You can try again later or change your input.");
+      }
+      d3.select("#modalErrorDialog").style("display","block");
       return;
     }
 
@@ -122,9 +134,9 @@ function resetChart(){
 
           //highlight user
           var usernameToHighlightClassname = d3.select(this).attr("class");
-          d3.select("g.lines path."+usernameToHighlightClassname)
+          d3.select("g.lines path." + usernameToHighlightClassname)
               .classed("highlight", true)
-              .moveToBack();
+              .moveToFront();
           d3.select("g.members text."+usernameToHighlightClassname)
               .classed("highlight", true)
               .moveToFront();
@@ -152,7 +164,7 @@ function resetChart(){
           var usernameToHighlightClassname = d3.select(this).attr("class");
           d3.select("g.lines path."+usernameToHighlightClassname)
               .classed("highlight", true)
-              .moveToBack();
+              .moveToFront();
           d3.select("g.members text."+usernameToHighlightClassname)
               .classed("highlight", true)
               .moveToFront();
@@ -161,7 +173,13 @@ function resetChart(){
 }
 
 function usernameToClassname(username){
-  return username.replace(/\s/gi, "-");
+  /* replace whitespaces with _ */
+  var whitespaceFree = username.replace(/\s/gi, "_");
+  /* add _ if starts with number */
+  if (!isNaN(parseInt(whitespaceFree))) {
+    return "_"+whitespaceFree;
+  }
+  return whitespaceFree;
 }
 
 function createClass(name,rules){
@@ -211,7 +229,7 @@ function getUrlParameterByName(name, url) {
 }
 
 function initModal(){
-  var modal = document.getElementById('myModal');
+  var modal = document.getElementById('modalErrorDialog');
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function () {
     modal.style.display = "none";

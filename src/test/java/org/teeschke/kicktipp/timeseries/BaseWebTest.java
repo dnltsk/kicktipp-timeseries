@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.teeschke.kicktipp.timeseries.config.ApplicationConfig;
 
-@SpringApplicationConfiguration(classes = {ApplicationConfiguration.class})
+@SpringApplicationConfiguration(classes = {ApplicationConfig.class})
 @WebIntegrationTest("server.port=0")
 public abstract class BaseWebTest extends AbstractTestNGSpringContextTests {
 

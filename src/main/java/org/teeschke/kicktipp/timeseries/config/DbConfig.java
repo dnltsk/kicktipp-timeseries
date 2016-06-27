@@ -1,4 +1,4 @@
-package org.teeschke.kicktipp.timeseries;
+package org.teeschke.kicktipp.timeseries.config;
 
 import org.springframework.beans.factory.annotation.Value;
 

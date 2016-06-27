@@ -1,11 +1,12 @@
 package org.teeschke.kicktipp.timeseries;
 
 import org.springframework.test.context.ContextConfiguration;
+import org.teeschke.kicktipp.timeseries.config.ApplicationConfig;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ContextConfiguration(classes = {ApplicationConfiguration.class, SpringInstantiationTest.class})
+@ContextConfiguration(classes = {ApplicationConfig.class, SpringInstantiationTest.class})
 public class SpringInstantiationTest {
 
   @Test
