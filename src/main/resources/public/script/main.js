@@ -138,6 +138,7 @@ function resetChart(){
     linesGroup.append("path")
         .datum(playerTimeseries)
         .attr("d", line)
+        .attr("stroke-linejoin", "round")
         .classed(classname, true)
         .on("mouseover", function(d, j){
           //unhighlight all
