@@ -63,15 +63,16 @@ function resetChart(){
 
   svg.selectAll("*").remove();
 
-  var margin = {top: 20, right: 150, bottom: 220, left: 50},
+  var margin = {top: 20, right: 150, bottom: 110, left: 50},
       width = WIDTH - margin.left - margin.right,
       height = HEIGHT - margin.top - margin.bottom;
 
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
 
+  var maxScore = d3.max(GROUP.orderedScores, function(scores) { return d3.max(scores, function(point){ return point}); });
   x.domain([0, GROUP.orderedMatches.length-1]);
-  y.domain([0, d3.max(GROUP.orderedScores, function(scores) { return d3.max(scores, function(point){ return point}); })]);
+  y.domain([0, maxScore]);
 
   var xAxis = d3.svg.axis().scale(x)
       .tickFormat(function(d){
@@ -117,10 +118,21 @@ function resetChart(){
       .x(function(points, i) { return x(i); })
       .y(function(points) { return y(points); });
 
-
+  /* VERTICAL HELP LINES */
+  var verticalHelpLinesGroup = g.append("g")
+      .classed("help-lines", true);
+  GROUP.orderedMatches.forEach(function (match, i) {
+    if(match.title == "Day Bonus") {
+      verticalHelpLinesGroup.append("line")
+          .attr("x1", x(i))
+          .attr("y1", y(0))
+          .attr("x2", x(i))
+          .attr("y2", y(maxScore));
+    }
+  });
+  /* LINES */
   var linesGroup = g.append("g")
                    .classed("lines", true);
-
   GROUP.orderedScores.forEach(function (playerTimeseries, i) {
     var classname = usernameToClassname(GROUP.orderedUsernames[i]);
     linesGroup.append("path")
@@ -140,12 +152,12 @@ function resetChart(){
           d3.select("g.members text."+usernameToHighlightClassname)
               .classed("highlight", true)
               .moveToFront();
-        });;
+        });
   });
 
+  /* MEMBERS */
   var membersGroup = g.append("g")
       .classed("members", true);
-
   var numberOfMatches = GROUP.orderedMatches.length;
   GROUP.orderedUsernames.forEach(function (username, i){
     var classname = usernameToClassname(username);
@@ -153,6 +165,7 @@ function resetChart(){
         .attr("x", x(numberOfMatches-1))
         .attr("y", y(GROUP.orderedScores[i][numberOfMatches-1]))
         .attr("dy", ".35em")
+        .attr("dx", ".25em")
         .classed(classname, true)
         .text(username)
         .on("mouseover", function(d, j){

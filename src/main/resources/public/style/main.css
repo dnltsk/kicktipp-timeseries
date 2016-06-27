@@ -62,7 +62,9 @@ svg{
   fill: #bbb;
 }
 
-
+.help-lines line{
+  stroke: #444;
+}
 .lines path {
   fill: none;
   stroke-width: 2px;

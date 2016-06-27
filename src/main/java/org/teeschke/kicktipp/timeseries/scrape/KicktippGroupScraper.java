@@ -1,6 +1,5 @@
 package org.teeschke.kicktipp.timeseries.scrape;
 
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.nodes.Document;
@@ -23,7 +22,7 @@ public class KicktippGroupScraper {
   public Group scrapeGroup(Document doc) {
     Group group = new Group();
     group.orderedUsernames = scrapeOrderedUsernames(doc);
-    group.orderedMatches = scrapeOrderedMatches(doc);
+    group.orderedMatches = scrapeOrderedMatchesAbbreviations(doc);
     group.orderedScores = scrapeOrderedScores(doc, group.orderedMatches.size());
     return orderGroupByUsername(group);
   }
@@ -85,16 +84,23 @@ public class KicktippGroupScraper {
     return memberScoresList;
   }
 
-  private ArrayList<Match> scrapeOrderedMatches(Document doc) {
+  private ArrayList<Match> scrapeOrderedMatchesAbbreviations(Document doc) {
     Elements tables = doc.select("table.nw.kicktipp-tabs");
-    Element matchTable = tables.get(MATCH_TABLE_INDEX);
-    Elements matchRows= matchTable.select("tr.o, tr.e");
+    Element matchTable = tables.get(SCORE_TABLE_INDEX);
+    Elements matchAbbreviationRows= matchTable.select("thead tr");
+    Element rowA = matchAbbreviationRows.get(0);
+    Element rowB = matchAbbreviationRows.get(2);
+    Elements abbreviationsA = rowA.select(".nw acronym");
+    Elements abbreviationsB = rowB.select(".nw acronym");
+
     ArrayList<Match> matches = new ArrayList<>();
-    for(Element matchRow : matchRows){
+    for(int i=0; i<abbreviationsA.size(); i++){
       Match match = new Match();
-      Elements matchCols = matchRow.select("td");
-      match.kickoffTime = DateTime.parse(matchCols.get(0).text(), KICKTIPP_TIME_FORMAT);
-      match.title = scrapeTitle(matchCols);
+      String abbreviationA = abbreviationsA.get(i).text();
+      String abbreviationB = abbreviationsB.get(i).text();
+      abbreviationA = replaceUnknown(abbreviationA);
+      abbreviationB = replaceUnknown(abbreviationB);
+      match.title = abbreviationA + " - " + abbreviationB;
       matches.add(match);
     }
     matches.add(createEmptyBonusMatch());
@@ -103,7 +109,7 @@ public class KicktippGroupScraper {
 
   private Match createEmptyBonusMatch() {
     Match emptyBonusMatch = new Match();
-    emptyBonusMatch.title = "Matchday Bonus";
+    emptyBonusMatch.title = "Day Bonus";
     return emptyBonusMatch;
   }
 
@@ -117,7 +123,7 @@ public class KicktippGroupScraper {
   }
 
   private String replaceUnknown(String teamB) {
-    return teamB.replaceAll("unknown", "/");
+    return teamB.replaceAll("unknown", "/").replaceAll("---", "/");
   }
 
   private ArrayList<String> scrapeOrderedUsernames(Document doc) {
