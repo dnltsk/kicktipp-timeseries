@@ -2,6 +2,8 @@
 
 _work in progress..._
 
+bug reports, feature requests, contribution appreciated :)
+
 # Kicktipp Timeseries
 
 Interactive time series visualization of [Kicktipp](http://kicktipp.com/) football prediction group members
