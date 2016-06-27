@@ -17,7 +17,6 @@ function init(){
   d3.json("/group?groupName="+groupName, function(error, group){
     hideWaiting();
     if(error){
-      console.log("error! ", error);
       var errorGroupName = JSON.parse(error.response).groupName;
       if(error.status == 404){
         d3.select("#errorTitle").text("Oups - unable to find your prediction group.");
