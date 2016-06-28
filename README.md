@@ -8,9 +8,7 @@ bug reports, feature requests, contribution appreciated :)
 
 Interactive time series visualization of [Kicktipp](http://kicktipp.com/) football prediction group members
 
-![Sample "familien-kicker"](src/main/resources/public/img/sample-familien-kicker.jpg "Sample familien-kicker")
-
-![Sample "meteogoal"](src/main/resources/public/img/sample-meteogoal.jpg "Sample meteogoal")
+![Sample animation](src/main/resources/public/img/animation.gif "Sample animation")
 
 ## build & start
 
