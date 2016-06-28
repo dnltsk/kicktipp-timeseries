@@ -62,9 +62,19 @@ function resetChart(){
 
   svg.selectAll("*").remove();
 
-  var margin = {top: 20, right: 150, bottom: 110, left: 50},
-      width = WIDTH - margin.left - margin.right,
-      height = HEIGHT - margin.top - margin.bottom;
+  var marginTop = 20;
+  var marginLeft = 50;
+  var marginRight = calcMaxMemberNameWidth()+20;
+  var width = WIDTH - marginLeft - marginRight;
+
+  var contentWidth = width + marginLeft + marginRight;
+  var matchTitleFontSize = contentWidth / GROUP.orderedMatches.length;
+
+  var marginBottom = calcMaxMatchTitleHeight(matchTitleFontSize)+30;
+
+  var margin = {top : marginTop, right: marginRight, bottom: marginBottom, left: marginLeft};
+
+  var height = HEIGHT - margin.top - margin.bottom;
 
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
@@ -82,7 +92,6 @@ function resetChart(){
 
   var yAxis = d3.svg.axis().scale(y).orient("left");
 
-
   var g = svg
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
@@ -98,7 +107,10 @@ function resetChart(){
       .attr("x", -9)
       .attr("dy", ".35em")
       .attr("transform", "rotate(270)")
-      .style("text-anchor", "end")
+      .style({
+        "text-anchor": "end",
+        "font-size": matchTitleFontSize+"px"
+      })
       .classed("bonus", function(d, i){
         return GROUP.orderedMatches[i].title.indexOf("Bonus") > -1;
       });
@@ -186,8 +198,8 @@ function resetChart(){
 }
 
 function usernameToClassname(username){
-  /* replace whitespaces with _ */
-  var whitespaceFree = username.replace(/\s/gi, "_");
+  /* replace whitespaces and "." with _ */
+  var whitespaceFree = username.replace(/[\s\.]/gi, "_");
   /* add _ if starts with number */
   if (!isNaN(parseInt(whitespaceFree))) {
     return "_"+whitespaceFree;
@@ -214,14 +226,12 @@ d3.selection.prototype.moveToFront = function() {
 d3.selection.prototype.moveToBack = function() {
   return this.each(function(){
     this.parentNode.insertBefore(this, this.parentNode.firstChild);
-    //this.parentNode.appendChild(this);
   });
 };
 
 function updateWindow(){
   WIDTH = window.innerWidth
   HEIGHT = window.innerHeight;
-  //svg.attr("width", WIDTH).attr("height", HEIGHT);
   resetChart();
 }
 window.onresize = updateWindow;
@@ -252,6 +262,36 @@ function initModal(){
       modal.style.display = "none";
     }
   };
+}
+
+function calcMaxMemberNameWidth(){
+  var tempGroup = svg.append("g");
+  GROUP.orderedUsernames.forEach(function (name) {
+    tempGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .style("font-weight","bold")
+        .text(name);
+  });
+  var bbox = tempGroup.node().getBBox();
+  console.log("names bbox",bbox);
+  tempGroup.remove();
+  return bbox.width;
+}
+
+function calcMaxMatchTitleHeight(matchTitleFontSize){
+  var tempGroup = svg.append("g");
+  GROUP.orderedMatches.forEach(function (match) {
+    tempGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .style("font-size", matchTitleFontSize+"px")
+        .text(match.title);
+  });
+  var bbox = tempGroup.node().getBBox();
+  console.log("matches bbox",bbox);
+  tempGroup.remove();
+  return bbox.width;
 }
 
 function initTextFocus() {
