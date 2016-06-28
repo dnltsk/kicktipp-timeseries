@@ -274,7 +274,6 @@ function calcMaxMemberNameWidth(){
         .text(name);
   });
   var bbox = tempGroup.node().getBBox();
-  console.log("names bbox",bbox);
   tempGroup.remove();
   return bbox.width;
 }
@@ -289,7 +288,6 @@ function calcMaxMatchTitleHeight(matchTitleFontSize){
         .text(match.title);
   });
   var bbox = tempGroup.node().getBBox();
-  console.log("matches bbox",bbox);
   tempGroup.remove();
   return bbox.width;
 }
