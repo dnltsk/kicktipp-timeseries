@@ -14,7 +14,7 @@ It is tested with prediction groups from
 * EURO2016
 * Bundesliga (15/16)   
 
-![Sample animation](src/main/resources/public/img/animation.gif "Sample animation")
+![Sample animation](src/main/resources/public/img/animation-medium.gif "Sample animation")
 
 ## build & start
 
