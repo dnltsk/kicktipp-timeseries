@@ -2,11 +2,12 @@
 
 _work in progress..._
 
-feedback, bug reports, feature requests, contribution appreciated :)
+feedback, bug reports, feature requests, contribution much appreciated :)
 
 # Kicktipp TimeSeries
 
-Interactive time series visualization of [Kicktipp](http://kicktipp.com/) football prediction groups. Because I like to recap all the tight moments :grimacing: with all the highs :chart_with_upwards_trend: and lows :chart_with_downwards_trend: during a prediction group.
+Interactive time series visualization for [Kicktipp](http://kicktipp.com/) football prediction groups. 
+Because I like to recap all the tight moments :grimacing: with all the personal highs :chart_with_upwards_trend: and lows :chart_with_downwards_trend: during a prediction group.
 
 It is tested with prediction groups from
 
