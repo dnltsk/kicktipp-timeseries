@@ -11,4 +11,4 @@ deployment:
   prod:
     branch: master
     heroku:
-      appname: kicktipp-timeseries
+      appname: kicktipp-timeseries-prod
