@@ -8,7 +8,13 @@ function init(){
   initModal();
   initTextFocus();
 
-  svg = d3.select("svg");
+  svg = d3.select("svg")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .call(d3.behavior.zoom().on("zoom", function () {
+        svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+      }))
+      .append("g");
 
   var groupName = getUrlParameterByName('groupName');
   if(groupName == null || typeof groupName == "undefined"){
