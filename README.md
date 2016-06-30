@@ -21,6 +21,6 @@ It is tested with prediction groups of :soccer: EURO2016 :soccer: Bundesliga (15
 
 ## background
 
-[JSOUP in Action](https://jsoup.org/) :tada:, because [Kicktipp](http://kicktipp.com/) doesn't offer any API. But please don't worry: data gets cached for 60 minutes so their servers are not getting stressed :fire: by this little service. :v:
+[JSOUP in Action](https://jsoup.org/) :tada: because [Kicktipp](http://kicktipp.com/) doesn't offer any API. But please don't worry: data gets cached for 60 minutes so their servers are not getting stressed :fire: by this little service. :v:
 
 No personal data is getting stored. Just for application controlling reasons the requested prediction group name plus request time are getting logged.
