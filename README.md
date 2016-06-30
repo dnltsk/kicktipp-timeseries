@@ -9,10 +9,7 @@ feedback, bug reports, feature requests, contribution much appreciated :)
 This is an interactive time series visualization for [Kicktipp](http://kicktipp.com/) football prediction groups. 
 Motivation behind ist that I would like to recap all the tight moments :grimacing: with all the personal highs :chart_with_upwards_trend: and lows :chart_with_downwards_trend: during the prediction phase.
 
-It is tested with prediction groups from
-
-:soccer: EURO2016
-:soccer: Bundesliga (15/16)   
+It is tested with prediction groups of :soccer: EURO2016 :soccer: Bundesliga (15/16).   
 
 ![Sample animation](src/main/resources/public/img/animation-medium.gif "Sample animation")
 
