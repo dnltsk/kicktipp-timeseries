@@ -32,6 +32,9 @@ public class KicktippScraper {
   @Autowired
   private KicktippLinkScraper linkScraper;
 
+  @Autowired
+  private PostProcessor postProcessor;
+
   public Group scrapeWholeGroupTimeseries(String groupName) throws IOException, GroupNotFoundException {
 
     /* GENERAL */
@@ -52,7 +55,10 @@ public class KicktippScraper {
 
     /* MERGE */
     Group mergedGroup = mergeGroups(groups);
-    mergedGroup.orderedScores = calcIntegrals(mergedGroup.orderedScores);
+
+
+    mergedGroup.orderedScores = postProcessor.calcIntegrals(mergedGroup.orderedScores);
+    mergedGroup.orderedPositions = postProcessor.calcPositions(mergedGroup.orderedScores);
     return mergedGroup;
   }
 
@@ -91,16 +97,6 @@ public class KicktippScraper {
 
   private URL getLinkFirstPageUrl(String groupName) throws MalformedURLException {
     return new URL("https://www.kicktipp.com/"+groupName+"/tippuebersicht?language=en_GB&rankingGruppeId=0&sortBy=gesamtpunkte&teilnehmerSucheName=&wertung=einzelwertung&tippspieltagIndex=1");
-  }
-
-  private ArrayList<ArrayList<Double>> calcIntegrals(ArrayList<ArrayList<Double>> orderedScores) {
-    for(ArrayList<Double> memberScores : orderedScores){
-      for (int i = 1; i < memberScores.size(); i++) {
-        Double integral =  memberScores.get(i-1) + memberScores.get(i);
-        memberScores.set(i, integral);
-      }
-    }
-    return orderedScores;
   }
 
 }
