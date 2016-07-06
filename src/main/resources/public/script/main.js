@@ -121,6 +121,10 @@ function resetChart(){
         return GROUP.orderedMatches[i].title.indexOf("Bonus") > -1;
       });
 
+  var line = d3.svg.line()
+      .x(function(points, i) { return x(i); })
+      .y(function(points) { return y(points); });
+
   g.append("g")
       .attr("class", "y axis")
       .call(yAxis)
@@ -129,11 +133,17 @@ function resetChart(){
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Points");
-
-  var line = d3.svg.line()
-      .x(function(points, i) { return x(i); })
-      .y(function(points) { return y(points); });
+      .text("Points")
+      .on("click", function(e){
+        return;
+        console.log("update!");
+        svg.selectAll("g.lines path")
+            .data(GROUP.orderedPositions)
+            .enter()
+            .append("path")
+            .attr("d", line)
+            .transition();
+      });
 
   /* VERTICAL HELP LINES */
   var verticalHelpLinesGroup = g.append("g")
@@ -148,59 +158,58 @@ function resetChart(){
     }
   });
   /* LINES */
-  var linesGroup = g.append("g")
-                   .classed("lines", true);
-  GROUP.orderedScores.forEach(function (playerTimeseries, i) {
-    var classname = usernameToClassname(GROUP.orderedUsernames[i]);
-    linesGroup.append("path")
-        .datum(playerTimeseries)
-        .attr("d", line)
-        .attr("stroke-linejoin", "round")
-        .classed(classname, true)
-        .on("mouseover", function(d, j){
-          //unhighlight all
-          d3.select("g.members text.highlight").classed("highlight", false);
-          d3.select("g.lines path.highlight").classed("highlight", false);
+  var linesGroup = g.append("g").classed("lines", true)
+      .selectAll("path")
+      .data(GROUP.orderedScores, function(d, i){console.log(i, d); return d;})
+      .enter()
+      .append("path")
+      .attr("d", line)
+      .attr("stroke-linejoin", "round")
+      .attr("class", function(d, i){return usernameToClassname(GROUP.orderedUsernames[i]);})
+      .on("mouseover", function(d, j){
+        //unhighlight all
+        d3.select("g.members text.highlight").classed("highlight", false);
+        d3.select("g.lines path.highlight").classed("highlight", false);
 
-          //highlight user
-          var usernameToHighlightClassname = d3.select(this).attr("class");
-          d3.select("g.lines path." + usernameToHighlightClassname)
-              .classed("highlight", true)
-              .moveToFront();
-          d3.select("g.members text."+usernameToHighlightClassname)
-              .classed("highlight", true)
-              .moveToFront();
-        });
-  });
+        //highlight user
+        var usernameToHighlightClassname = d3.select(this).attr("class");
+        d3.select("g.lines path." + usernameToHighlightClassname)
+            .classed("highlight", true)
+            .moveToFront();
+        d3.select("g.members text."+usernameToHighlightClassname)
+            .classed("highlight", true)
+            .moveToFront();
+      });
+
 
   /* MEMBERS */
-  var membersGroup = g.append("g")
-      .classed("members", true);
   var numberOfMatches = GROUP.orderedMatches.length;
-  GROUP.orderedUsernames.forEach(function (username, i){
-    var classname = usernameToClassname(username);
-    membersGroup.append("text")
-        .attr("x", x(numberOfMatches-1))
-        .attr("y", y(GROUP.orderedScores[i][numberOfMatches-1]))
-        .attr("dy", ".35em")
-        .attr("dx", ".25em")
-        .classed(classname, true)
-        .text(username)
-        .on("mouseover", function(d, j){
-          //unhighlight all
-          d3.select("g.members text.highlight").classed("highlight", false);
-          d3.select("g.lines path.highlight").classed("highlight", false);
+  var membersGroup = g.append("g").classed("members", true)
+      .selectAll("text")
+      .data(GROUP.orderedUsernames, function(d, i){console.log(i, d); return d;})
+      .enter()
+      .append("text")
+      .attr("x", x(numberOfMatches-1))
+      .attr("y", function(d, i){return y(GROUP.orderedScores[i][numberOfMatches-1]);})
+      .attr("dy", ".35em")
+      .attr("dx", ".25em")
+      .attr("class", function(d){return usernameToClassname(d);})
+      .text(function(d){return d;})
+      .on("mouseover", function(d, j){
+        //unhighlight all
+        d3.select("g.members text.highlight").classed("highlight", false);
+        d3.select("g.lines path.highlight").classed("highlight", false);
 
-          //highlight user
-          var usernameToHighlightClassname = d3.select(this).attr("class");
-          d3.select("g.lines path."+usernameToHighlightClassname)
-              .classed("highlight", true)
-              .moveToFront();
-          d3.select("g.members text."+usernameToHighlightClassname)
-              .classed("highlight", true)
-              .moveToFront();
-        });
-  });
+        //highlight user
+        var usernameToHighlightClassname = d3.select(this).attr("class");
+        d3.select("g.lines path."+usernameToHighlightClassname)
+            .classed("highlight", true)
+            .moveToFront();
+        d3.select("g.members text."+usernameToHighlightClassname)
+            .classed("highlight", true)
+            .moveToFront();
+      });
+
 }
 
 function usernameToClassname(username){
