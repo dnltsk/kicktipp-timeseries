@@ -136,9 +136,8 @@ function resetChart(){
       .text("Points")
       .on("click", function(e){
         return;
-        console.log("update!");
         svg.selectAll("g.lines path")
-            .data(GROUP.orderedPositions)
+            .data(GROUP.orderedPositions, function(d, i){return d;})
             .enter()
             .append("path")
             .attr("d", line)
@@ -157,10 +156,11 @@ function resetChart(){
           .attr("y2", y(maxScore));
     }
   });
+
   /* LINES */
   var linesGroup = g.append("g").classed("lines", true)
       .selectAll("path")
-      .data(GROUP.orderedScores, function(d, i){console.log(i, d); return d;})
+      .data(GROUP.orderedScores, function(d, i){return d;})
       .enter()
       .append("path")
       .attr("d", line)
@@ -186,7 +186,7 @@ function resetChart(){
   var numberOfMatches = GROUP.orderedMatches.length;
   var membersGroup = g.append("g").classed("members", true)
       .selectAll("text")
-      .data(GROUP.orderedUsernames, function(d, i){console.log(i, d); return d;})
+      .data(GROUP.orderedUsernames, function(d, i){return d;})
       .enter()
       .append("text")
       .attr("x", x(numberOfMatches-1))
