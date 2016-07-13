@@ -24,3 +24,9 @@ It is tested with prediction groups of :soccer: EURO2016 :soccer: Bundesliga (15
 [JSOUP in Action](https://jsoup.org/) :tada: because [Kicktipp](http://kicktipp.com/) doesn't offer any API. But please don't worry: data gets cached for 60 minutes so their servers are not getting stressed :fire: by this little service. :v:
 
 No personal data is getting stored. Just for application controlling reasons the requested prediction group name plus request time are getting logged.
+
+## roadmap
+
+1. (2016) point/position switch
+2. (2016) dynamic bonus points + upgrade on D3v4
+3. (2017) adopt F1 prediction groups
